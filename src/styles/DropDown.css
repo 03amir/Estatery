@@ -1,0 +1,19 @@
+.dropDownFrame{
+    
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-direction: column;
+   
+    height: 80px;
+    width: 200px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    box-shadow: rgb(224, 224, 224) 0.5px 0.5px 0.5px 0.5px;
+
+}
+
+.small{
+    font-size: 15px;
+    color: rgb(134, 134, 134);
+}

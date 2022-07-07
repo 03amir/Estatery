@@ -1,0 +1,60 @@
+.filterFrame {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 60px;
+    margin-top: 30px;
+    padding: 3px 25px;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 90%;
+
+}
+
+.calender {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+}
+
+.calender input {
+    position: absolute;
+    opacity: 0;
+}
+
+input[type=date] {
+    width: 10%;
+
+    box-sizing: border-box;
+}
+
+
+
+.date p{
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.dropDownFrame {
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-direction: column;
+
+    height: 80px;
+    width: 200px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    box-shadow: rgb(224, 224, 224) 0.5px 0.5px 0.5px 0.5px;
+
+}

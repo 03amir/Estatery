@@ -1,0 +1,33 @@
+.rentFrame {
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.searchHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.properties {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 40px;
+
+  flex-wrap: wrap;
+}
+
+input {
+  border: 1.5px solid grey;
+  padding: 8px 19px;
+  border-radius: 5px;
+}
+
+button:hover{
+  cursor: pointer;
+}
