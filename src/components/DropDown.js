@@ -7,7 +7,14 @@ function DropDown({ heading, alloptions, setselectedOption }) {
       <h3 className="small">{heading}</h3>
       <select
         onChange={(e) => {
-          setselectedOption(e.target.value);
+          let val = null;
+          if(e.target.value === "Not Selected"){
+            val = null;
+          }
+          else{
+            val = e.target.value;
+          }
+          setselectedOption(val);
         }}
       >
         {alloptions.map((option,id) => {

@@ -47,13 +47,15 @@ function Filters({
         <h3 className="small">Price</h3>
         <select
           onChange={(e) => {
-            setselectedPrice(e.target.value);
+           let val = e.target.value == -1 ? null : e.target.value;
+           console.log(e.target.value)
+            setselectedPrice(val);
           }}
         >
           <option value={-1}>Not Selected</option>
-          <option value={1000}>$ 0 - $ 1000</option>
-          <option value={2000}>$ 1000 - $ 2000</option>
-          <option value={3000}>$ 2000 - $ 3000</option>
+          <option value={[0,1000]}>$ 0 - $ 1000</option>
+          <option value={[1000,2000]}>$ 1000 - $ 2000</option>
+          <option value={[2000,3000]}>$ 2000 - $ 3000</option>
         </select>
       </div>
 

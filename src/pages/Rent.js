@@ -18,6 +18,7 @@ const locationsToFilter = [
 ];
 
 function Rent(props) {
+
   const [properties, setPropertis] = useState(dataList);
 
   const [selectedCategory, setselectedCategory] = useState(null);
@@ -26,72 +27,33 @@ function Rent(props) {
   const [selectedPrice, setselectedPrice] = useState(null);
   const [selectedInput, setSelectedInput] = useState("");
 
-  let updatedProperties = dataList;
 
-  function filterHandlr() {
-    // for property type filter
-    if (selectedCategory) {
-      if (selectedCategory !== "Not Selected") {
-        updatedProperties = updatedProperties.filter((item) => {
-          return item.type === selectedCategory;
-        });
-      }
-    }
+    const filterHandlr = () => {
 
-    // for city filter
-    if (selectedlocation) {
-      if (selectedlocation !== "Not Selected") {
-        updatedProperties = updatedProperties.filter((item) => {
-          return item.city === selectedlocation;
-        });
-      }
-    }
 
-    // for price filter
-    if (selectedPrice) {
-      if (selectedPrice !== -1) {
-        updatedProperties = updatedProperties.filter((item) => {
-          return (
-            item.price <= selectedPrice && item.price >= selectedPrice - 1000
-          );
-        });
-      }
-    }
+        let [minPrice, maxPrice] = [0,3000] 
+        if(selectedPrice){
+          [minPrice, maxPrice] = selectedPrice.split(',');
+        }
+      console.log(maxPrice,minPrice)
 
-    // for move in date filter
-    if (selectedMoveInDate) {
-      const [year, month, day] = selectedMoveInDate.split("-");
-      const selectedDate = new Date(+year, month - 1, +day);
-
-      updatedProperties = updatedProperties.filter((item) => {
-        const [day, month, year] = item.freeFrom.split("/");
-        const itemDate = new Date(+year, month - 1, +day);
-
-        return itemDate <= selectedDate;
-      });
-    }
-
-    setPropertis(updatedProperties);
-  }
-
-  function searchHandlr(e) {
-    if (e.target.value === "") {
-      filterHandlr();
-    } else {
-      filterHandlr();
-      let searchedData = updatedProperties.filter((item) => {
-        return item.title
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase().trim());
+      const filteredHotels = dataList.filter((hotel) => {
+        return (
+          (selectedlocation === null || hotel.city === selectedlocation) &&
+          (selectedPrice === null || (hotel.price >= parseInt(minPrice) && hotel.price <= parseInt(maxPrice))) &&
+          (selectedCategory === null || hotel.type === selectedCategory) &&
+          (selectedMoveInDate === null || hotel.freeFrom === selectedMoveInDate) &&
+          (selectedInput === '' ||
+            hotel.title.toLowerCase().includes(selectedInput?.toLowerCase()))
+        );
       });
 
-      setPropertis(searchedData);
-    }
-
-    setSelectedInput(e.target.value);
+      setPropertis(filteredHotels);
   }
+
 
   return (
+
     <div className="rentFrame">
       <div className="searchHeading">
         <h1>Search properties to rent</h1>
@@ -100,7 +62,7 @@ function Rent(props) {
           placeholder="Search any property"
           value={selectedInput}
           onInput={(e) => {
-            searchHandlr(e);
+            setSelectedInput(e.target.value)
           }}
         />
       </div>
