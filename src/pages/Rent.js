@@ -1,5 +1,5 @@
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import Filters from "../components/Filters";
 import "../styles/Rent.css";
 import { dataList } from "../dummyData/data";
@@ -18,7 +18,6 @@ const locationsToFilter = [
 ];
 
 function Rent(props) {
-
   const [properties, setPropertis] = useState(dataList);
 
   const [selectedCategory, setselectedCategory] = useState(null);
@@ -27,33 +26,34 @@ function Rent(props) {
   const [selectedPrice, setselectedPrice] = useState(null);
   const [selectedInput, setSelectedInput] = useState("");
 
+  const filterHandlr = () => {
+    let [minPrice, maxPrice] = [0, 3000];
+    if (selectedPrice) {
+      [minPrice, maxPrice] = selectedPrice.split(",");
+    }
 
-    const filterHandlr = () => {
+    const selectedDate = new Date(selectedMoveInDate);
 
+    const filteredHotels = dataList.filter((hotel) => {
+      const [day, month, year] = hotel.freeFrom.split("/").map(Number);
+      const jsDate = new Date(year, month - 1, day);
 
-        let [minPrice, maxPrice] = [0,3000] 
-        if(selectedPrice){
-          [minPrice, maxPrice] = selectedPrice.split(',');
-        }
-      console.log(maxPrice,minPrice)
+      return (
+        (selectedlocation === null || hotel.city === selectedlocation) &&
+        (selectedPrice === null ||
+          (hotel.price >= parseInt(minPrice) &&
+            hotel.price <= parseInt(maxPrice))) &&
+        (selectedCategory === null || hotel.type === selectedCategory) &&
+        (selectedMoveInDate === null || selectedDate >= jsDate) &&
+        (selectedInput === "" ||
+          hotel.title.toLowerCase().includes(selectedInput?.toLowerCase()))
+      );
+    });
 
-      const filteredHotels = dataList.filter((hotel) => {
-        return (
-          (selectedlocation === null || hotel.city === selectedlocation) &&
-          (selectedPrice === null || (hotel.price >= parseInt(minPrice) && hotel.price <= parseInt(maxPrice))) &&
-          (selectedCategory === null || hotel.type === selectedCategory) &&
-          (selectedMoveInDate === null || hotel.freeFrom === selectedMoveInDate) &&
-          (selectedInput === '' ||
-            hotel.title.toLowerCase().includes(selectedInput?.toLowerCase()))
-        );
-      });
-
-      setPropertis(filteredHotels);
-  }
-
+    setPropertis(filteredHotels);
+  };
 
   return (
-
     <div className="rentFrame">
       <div className="searchHeading">
         <h1>Search properties to rent</h1>
@@ -62,7 +62,7 @@ function Rent(props) {
           placeholder="Search any property"
           value={selectedInput}
           onInput={(e) => {
-            setSelectedInput(e.target.value)
+            setSelectedInput(e.target.value);
           }}
         />
       </div>
@@ -79,11 +79,9 @@ function Rent(props) {
 
       <div className="properties">
         {properties.map((property) => {
-          return <PopertyCard property={property} key={property.id}/>;
+          return <PopertyCard property={property} key={property.id} />;
         })}
       </div>
-
-
     </div>
   );
 }
